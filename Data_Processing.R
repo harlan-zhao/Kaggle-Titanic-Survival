@@ -49,21 +49,18 @@ for (i in 1:nrow(data.combined)) {
   titles <- c(titles, extractTitle(data.combined[i,"Name"]))
 }
 data.combined$title <- as.factor(titles)
+summary(data.combined[1:891,"Age"])
 
-ggplot(data.combined[1:891,],aes(x = title, fill = Survived)) +
-         geom_bar(width = 0.5)+
+ggplot(misses[misses$Survived != "None",],aes(x = Age, fill = Survived)) +
+         geom_histogram(binwidth = 5)+
          facet_wrap(~Pclass)+
          ggtitle("Pclass")+
-         xlab("Title")+
+         xlab("Age")+
          ylab("Total Count")+
          labs(fill = "Survived")
 
-
-
-
-
-
-
+Mr <- data.combined[which(data.combined$title == "Mr."),]
+summary(Mr$Age)
 
 
 

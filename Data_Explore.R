@@ -57,6 +57,7 @@ ggplot(misses[misses$Survived != "None",],aes(x = Age, fill = Survived)) +
          ggtitle("Pclass")+
          xlab("Age")+
          ylab("Total Count")+
+         ylim(0,20)+
          labs(fill = "Survived")
 
 Mr <- data.combined[which(data.combined$title == "Mr."),]

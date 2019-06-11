@@ -48,6 +48,11 @@ titles <- NULL
 for (i in 1:nrow(data.combined)) {
   titles <- c(titles, extractTitle(data.combined[i,"Name"]))
 }
+
+temp.sibsp <- c(train$SibSp,test$SibSp)
+temp.parch <- c(train$Parch,test$Parch)
+data.combined$FamilySize <- as.factor(temp.sibsp+temp.parch)
+
 data.combined$title <- as.factor(titles)
 summary(data.combined[1:891,"Age"])
 
@@ -65,13 +70,17 @@ summary(Mr$Age)
 
 library(randomForest)
 
-rf.train.1 <- data.combined[1:891,c("Pclass","title","SibSp","Parch")]
+rf.train.1 <- data.combined[1:891,c("Pclass","title","FamilySize")]
 rf.label <- as.factor(train$Survived)
 
 set.seed(1234)
 rf.1 <- randomForest(x=rf.train.1,y=rf.label,importance = TRUE,ntree = 1000)
 rf.1
-varImpPlot(rf.1)
+test.submit <- data.combined[892:1309,c("Pclass","title","FamilySize")]
 
+rf.1.predictions <- predict(rf.1, test.submit)
+submmit.df <- data.frame(PassengerId = rep(892:1309),Survived=rf.1.predictions)
+
+write.csv(submmit.df, file = "Submmit_1_Titanic.csv",row.names = FALSE)
   
 

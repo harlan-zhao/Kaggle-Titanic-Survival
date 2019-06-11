@@ -63,13 +63,15 @@ ggplot(misses[misses$Survived != "None",],aes(x = Age, fill = Survived)) +
 Mr <- data.combined[which(data.combined$title == "Mr."),]
 summary(Mr$Age)
 
+library(randomForest)
 
+rf.train.1 <- data.combined[1:891,c("Pclass","title","SibSp","Parch")]
+rf.label <- as.factor(train$Survived)
 
-
-
-
-
-
+set.seed(1234)
+rf.1 <- randomForest(x=rf.train.1,y=rf.label,importance = TRUE,ntree = 1000)
+rf.1
+varImpPlot(rf.1)
 
   
 

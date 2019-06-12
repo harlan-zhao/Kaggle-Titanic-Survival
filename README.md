@@ -1,2 +1,2 @@
 # Titanic-Machine-Learning
-R language machine learning practice on Titanic data
+Kaggle Titanic Survival Prediction in R & Python using logistic regression, SVM , decision tree, random forest.
